@@ -7,4 +7,4 @@ description: "学习Android 中的小菜鸟"
 
 我是一个小小小小鸟
 
-![图片](th.jepg)
+![](http://img.mcwebsite.top/th.jpeg)
