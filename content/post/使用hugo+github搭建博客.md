@@ -2,7 +2,8 @@
 title: "使用hugo+github搭建博客"
 date: 2020-01-18T15:23:44+08:00
 draft: false
-type: "博客搭建"
+toc: true
+categories: ["博客搭建"]
 ---
 
 # 使用 hugo+github搭建博客
