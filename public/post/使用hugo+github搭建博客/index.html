@@ -52,7 +52,7 @@
             </div>
             <div>
                 <nav id="nav-menu" class="clearfix">
-                    <a class="current" href="https://blog.mengchen.online">首页</a>
+                    <a class="" href="https://blog.mengchen.online">首页</a>
                     
                     <a  href="https://blog.mengchen.online/tools/" title="工具">工具</a>
                     
@@ -139,7 +139,22 @@
     <div class="post-toc-content">
         <nav id="TableOfContents">
   <ul>
-    <li><a href="#hugo-安装">hugo 安装</a></li>
+    <li><a href="#hugo-安装">hugo 安装</a>
+      <ul>
+        <li><a href="#mac-平台下">Mac 平台下</a></li>
+        <li><a href="#debian-and-ubuntu平台下">Debian and Ubuntu平台下</a></li>
+        <li><a href="#windows-平台下">Windows 平台下</a></li>
+        <li><a href="#验证安装">验证安装</a></li>
+      </ul>
+    </li>
+    <li><a href="#主题的下载和配置等">主题的下载和配置等</a>
+      <ul>
+        <li><a href="#创建一个站点">创建一个站点</a></li>
+        <li><a href="#创建文章">创建文章</a></li>
+        <li><a href="#安装皮肤">安装皮肤</a></li>
+        <li><a href="#配置">配置</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
     </div>
@@ -196,19 +211,102 @@
 <li>部署到 github page。</li>
 </ol>
 <h2 id="hugo-安装">hugo 安装</h2>
-
+<p>可以在 hugo 的 <a href="https://github.com/gohugoio/hugo/releases">github</a>页面下选择对应的平台进行下载，下载完成之后可以使用对应的平台的二进制，然后根据平台配置环境变量。</p>
+<h3 id="mac-平台下">Mac 平台下</h3>
+<p>mac 下面的安装可以通过 HomeBrew 完成。如果没有按照 HomeBrew 可以参考这篇<a href="https://brew.sh/">文章</a>。</p>
+<pre><code>brew install hugo
+</code></pre><h3 id="debian-and-ubuntu平台下">Debian and Ubuntu平台下</h3>
+<pre><code>sudo apt-get install hugo
+</code></pre><h3 id="windows-平台下">Windows 平台下</h3>
+<p>Windows下Hugo提供了Chocolatey方式的安装，通过如下命令即可。</p>
+<pre><code>choco install hugo -confirm
+</code></pre><p>PS: 只在 mac 平台下安装过。</p>
+<h3 id="验证安装">验证安装</h3>
+<p>安装完成后，打开终端，输入如下命令验证是否安装成功。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hugo version
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="主题的下载和配置等">主题的下载和配置等</h2>
+<h3 id="创建一个站点">创建一个站点</h3>
+<p>首先选择一个目录作为站点目录。比如选择 <code>/path/to/site</code>。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hugo new site /path/to/site
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="创建文章">创建文章</h3>
+<p>创建你的第一篇文章:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">hugo new 目录/文章名.md
+</code></pre></td></tr></table>
+</div>
+</div><p>上面的命令会在对应的 content 下面生成你指定的目录（如果不存在的话会创建一个）下生成对应的文件。</p>
+<p>生成的内容如下:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">title<span style="color:#a61717;background-color:#e3d2d2">:</span> <span style="color:#d14">&#34;文章名&#34;</span>
+date<span style="color:#a61717;background-color:#e3d2d2">:</span> 2020-01-18T11:57:10+08:00
+draft<span style="color:#a61717;background-color:#e3d2d2">:</span> <span style="color:#000;font-weight:bold">true</span>
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>title: 文章名</li>
+<li>date: 时间</li>
+<li>draft: 是否草稿</li>
+</ul>
+<h3 id="安装皮肤">安装皮肤</h3>
+<p>可以在 Hugo 官网中找到一款好看的皮肤进行安装。</p>
+<p>下面是一个大佬使用的皮肤。</p>
+<p>maupassant: <a href="https://github.com/rujews/maupassant-hugo">https://github.com/rujews/maupassant-hugo</a></p>
+<p>安装皮肤，首先将皮肤从 github 上克隆下来。</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell">git clone https://github.com/rujews/maupassant-hugo themes/maupassant
+</code></pre></td></tr></table>
+</div>
+</div><p>然后在配置文件中进行更新:</p>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">theme = <span style="color:#d14">&#34;maupassant&#34;</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>这里注意一点: 需要将文章放到 content/post 中。</p>
+<h3 id="配置">配置</h3>
+<div class="highlight"><div style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4">
+<table style="border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block;"><tr><td style="vertical-align:top;padding:0;margin:0;border:0;">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
+</span></code></pre></td>
+<td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">
+</code></pre></td></tr></table>
+</div>
+</div>
         </div>
 
         
-<div class="post-archive">
-    <ul class="post-copyright">
-        <li><strong>原文作者：</strong><a rel="author" href="https://blog.mengchen.online">MC</a></li>
-        <li style="word-break:break-all"><strong>原文链接：</strong><a href="https://blog.mengchen.online/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/">https://blog.mengchen.online/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</a></li>
-        <li><strong>版权声明：</strong>本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">知识共享署名-非商业性使用-禁止演绎 4.0 国际许可协议</a>进行许可，非商业转载请注明出处（作者，原文链接），商业转载请联系作者获得授权。</li>
-    </ul>
-</div>
-<br/>
-
 
 
         
@@ -263,10 +361,6 @@
     <section class="widget">
         <h3 class="widget-title">最近文章</h3>
 <ul class="widget-list">
-    
-    <li>
-        <a href="https://blog.mengchen.online/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="使用hugo&#43;github搭建博客">使用hugo&#43;github搭建博客</a>
-    </li>
     
     <li>
         <a href="https://blog.mengchen.online/post/test/" title="Test">Test</a>
