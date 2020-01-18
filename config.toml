@@ -94,4 +94,5 @@ defaultMarkdownHandler = "Goldmark"
 
   [[menu.main]]
     identifier = "about"
+    url = "/about"
     name = "关于"
