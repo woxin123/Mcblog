@@ -17,7 +17,7 @@
       <pubDate>Sat, 18 Jan 2020 15:23:44 +0800</pubDate>
       
       <guid>https://blog.mengchen.online/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</guid>
-      <description>使用 hugo+github搭建博客 TODO 测试</description>
+      <description>使用 hugo+github搭建博客 hugo 是基于 golang 实现的一个静态的网页生成软件。比较简单快捷。 主要步骤是: hugo 的安装。 主题的下载配置等。 部署到 github page。 hugo 安装</description>
     </item>
     
     <item>

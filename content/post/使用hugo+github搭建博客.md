@@ -6,6 +6,13 @@ draft: false
 
 # 使用 hugo+github搭建博客
 
-TODO
+hugo 是基于 golang 实现的一个静态的网页生成软件。比较简单快捷。
 
-测试
+主要步骤是:
+
+1. hugo 的安装。
+2. 主题的下载配置等。
+3. 部署到 github page。
+
+## hugo 安装
+
