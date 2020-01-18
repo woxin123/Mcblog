@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://enthusiasm001.gitee.io/</loc>
+    <lastmod>2020-01-18T15:23:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://enthusiasm001.gitee.io/post/</loc>
+    <lastmod>2020-01-18T15:23:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://enthusiasm001.gitee.io/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2020-01-18T15:23:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://enthusiasm001.gitee.io/post/test/</loc>
+    <lastmod>2020-01-18T11:57:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://enthusiasm001.gitee.io/categories/</loc>
+  </url>
+  
+  <url>
+    <loc>https://enthusiasm001.gitee.io/tags/</loc>
+  </url>
+  
+  <url>
+    <loc>https://enthusiasm001.gitee.io/archives/</loc>
+  </url>
+  
+</urlset>
