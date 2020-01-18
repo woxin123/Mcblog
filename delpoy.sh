@@ -1,5 +1,7 @@
 #/bin/sh
-cd /Users/bytedance/workspace/blog/public
+cd /Users/bytedance/workspace/blog
+hugo
+cd public
 git add .
 git commit -m $1
 git push origin gh-pages
