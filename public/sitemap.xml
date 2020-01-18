@@ -3,30 +3,30 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>/</loc>
+    <loc>https://enthusiasm001.gitee.io/enthusiasm/public/</loc>
     <lastmod>2020-01-18T11:57:10+08:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/</loc>
+    <loc>https://enthusiasm001.gitee.io/enthusiasm/public/post/</loc>
     <lastmod>2020-01-18T11:57:10+08:00</lastmod>
   </url>
   
   <url>
-    <loc>/post/test/</loc>
+    <loc>https://enthusiasm001.gitee.io/enthusiasm/public/post/test/</loc>
     <lastmod>2020-01-18T11:57:10+08:00</lastmod>
   </url>
   
   <url>
-    <loc>/categories/</loc>
+    <loc>https://enthusiasm001.gitee.io/enthusiasm/public/categories/</loc>
   </url>
   
   <url>
-    <loc>/tags/</loc>
+    <loc>https://enthusiasm001.gitee.io/enthusiasm/public/tags/</loc>
   </url>
   
   <url>
-    <loc>/archives/</loc>
+    <loc>https://enthusiasm001.gitee.io/enthusiasm/public/archives/</loc>
   </url>
   
 </urlset>
