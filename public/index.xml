@@ -2,30 +2,30 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>MC 博客</title>
-    <link>https://enthusiasm001.gitee.io/enthusiasm/public/</link>
+    <link>https://enthusiasm001.gitee.io/enthusiasm/</link>
     <description>Recent content on MC 博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
     <lastBuildDate>Sat, 18 Jan 2020 11:57:10 +0800</lastBuildDate>
     
-	<atom:link href="https://enthusiasm001.gitee.io/enthusiasm/public/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://enthusiasm001.gitee.io/enthusiasm/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Test</title>
-      <link>https://enthusiasm001.gitee.io/enthusiasm/public/post/test/</link>
+      <link>https://enthusiasm001.gitee.io/enthusiasm/post/test/</link>
       <pubDate>Sat, 18 Jan 2020 11:57:10 +0800</pubDate>
       
-      <guid>https://enthusiasm001.gitee.io/enthusiasm/public/post/test/</guid>
+      <guid>https://enthusiasm001.gitee.io/enthusiasm/post/test/</guid>
       <description>这是一个测试</description>
     </item>
     
     <item>
       <title>归档</title>
-      <link>https://enthusiasm001.gitee.io/enthusiasm/public/archives/</link>
+      <link>https://enthusiasm001.gitee.io/enthusiasm/archives/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://enthusiasm001.gitee.io/enthusiasm/public/archives/</guid>
+      <guid>https://enthusiasm001.gitee.io/enthusiasm/archives/</guid>
       <description></description>
     </item>
     
