@@ -6,10 +6,19 @@
     <description>Recent content on MC 博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Sat, 18 Jan 2020 11:57:10 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 18 Jan 2020 15:23:44 +0800</lastBuildDate>
     
 	<atom:link href="https://enthusiasm001.gitee.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>使用hugo&#43;github搭建博客</title>
+      <link>https://enthusiasm001.gitee.io/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
+      <pubDate>Sat, 18 Jan 2020 15:23:44 +0800</pubDate>
+      
+      <guid>https://enthusiasm001.gitee.io/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</guid>
+      <description>使用 hugo+github搭建博客 TODO</description>
+    </item>
     
     <item>
       <title>Test</title>
