@@ -20,7 +20,7 @@ defaultMarkdownHandler = "Goldmark"
   name = "MC"
 
 [params]
-  author = "皮皮"
+  author = "星行者"
   subtitle = "Android 后端菜鸟"
   keywords = "java,kotlin,android,后端"
   description = "Android 后端菜鸟"
