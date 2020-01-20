@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>数据库 on 🌟行者 博客</title>
+    <link>https://blog.mengchen.online/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <description>Recent content in 数据库 on 🌟行者 博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-CN</language>
+    <lastBuildDate>Sat, 29 Sep 2018 00:16:25 +0800</lastBuildDate>
+    
+	<atom:link href="https://blog.mengchen.online/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>数据库的事物和并发问题</title>
+      <link>https://blog.mengchen.online/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 29 Sep 2018 00:16:25 +0800</pubDate>
+      
+      <guid>https://blog.mengchen.online/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/</guid>
+      <description>数据库事务 事务（Transaction）是并发控制的基本单位。所谓的事务，它是一个操作序列，这些操作要么全部执行，要么全部都不执行。比如，银行转账，从一个账号扣钱，然后另一个账号余额增加，这两个操作要么都执行，要么都不执行。这两个操作组合在一起就是事务。 数据库事务有严格的定义，它</description>
+    </item>
+    
+  </channel>
+</rss>
