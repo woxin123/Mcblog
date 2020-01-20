@@ -96,3 +96,13 @@ defaultMarkdownHandler = "Goldmark"
     identifier = "about"
     url = "/about"
     name = "关于"
+
+[params.valine]
+    enable = true
+    appId = 'Wh8pwLoR0pjRL97Q8rlJp9jS-gzGzoHsz'
+    appKey = '4QT1DCo0KbARIjnlkGHV51KG'
+    notify = false  # mail notifier , https://github.com/xCss/Valine/wiki
+    verify = false # Verification code
+    avatar = 'mm' 
+    placeholder = '说点什么吧...'
+    visitor = true
