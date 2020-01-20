@@ -12,15 +12,6 @@
     
     
     <item>
-      <title>Java 并发之无锁</title>
-      <link>https://blog.mengchen.online/post/Java%E5%B9%B6%E5%8F%91%E4%B9%8B%E6%97%A0%E9%94%81/</link>
-      <pubDate>Sat, 18 Jan 2020 15:23:44 +0800</pubDate>
-      
-      <guid>https://blog.mengchen.online/post/Java%E5%B9%B6%E5%8F%91%E4%B9%8B%E6%97%A0%E9%94%81/</guid>
-      <description>Java并发编程之无锁 在谈论无所之前先来看看乐观派和悲观派。对于乐观派而言，他们总认为事情总会朝着好的方向发展，总认为几乎不会坏事，我已可以随意的去做事。但是对于悲观派来说，他们认为出错是一种常态，所以无论事情大小都会考虑的面面俱到，滴水不漏。 在两种派别对应在并发中就是加锁和无锁</description>
-    </item>
-    
-    <item>
       <title>使用hugo&#43;github搭建博客</title>
       <link>https://blog.mengchen.online/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Sat, 18 Jan 2020 15:23:44 +0800</pubDate>
@@ -36,6 +27,24 @@
       
       <guid>https://blog.mengchen.online/post/test/</guid>
       <description>这是一个测试 这是一个测试 这是一个测试 这是一个测试 这是一个测试 这是一个测试</description>
+    </item>
+    
+    <item>
+      <title>数据库的事物和并发问题</title>
+      <link>https://blog.mengchen.online/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/</link>
+      <pubDate>Sat, 29 Sep 2018 00:16:25 +0800</pubDate>
+      
+      <guid>https://blog.mengchen.online/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/</guid>
+      <description>数据库事务 事务（Transaction）是并发控制的基本单位。所谓的事务，它是一个操作序列，这些操作要么全部执行，要么全部都不执行。比如，银行转账，从一个账号扣钱，然后另一个账号余额增加，这两个操作要么都执行，要么都不执行。这两个操作组合在一起就是事务。 数据库事务有严格的定义，它</description>
+    </item>
+    
+    <item>
+      <title>Java 并发之无锁</title>
+      <link>https://blog.mengchen.online/post/Java%E5%B9%B6%E5%8F%91%E4%B9%8B%E6%97%A0%E9%94%81/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.mengchen.online/post/Java%E5%B9%B6%E5%8F%91%E4%B9%8B%E6%97%A0%E9%94%81/</guid>
+      <description>Java并发编程之无锁 在谈论无所之前先来看看乐观派和悲观派。对于乐观派而言，他们总认为事情总会朝着好的方向发展，总认为几乎不会坏事，我已可以随意的去做事。但是对于悲观派来说，他们认为出错是一种常态，所以无论事情大小都会考虑的面面俱到，滴水不漏。 在两种派别对应在并发中就是加锁和无锁</description>
     </item>
     
   </channel>
