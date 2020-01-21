@@ -145,28 +145,98 @@
 |T8|提交事务||</p>
 <p>在这个场景中转账事务A读取到取款事务B中的未提交的数据，导致脏读。</p>
 <h4 id="2-不可重复读unrepeatable-read">2. 不可重复读(unrepeatable read)</h4>
-<p>不可重复读是指A事务读取B事务已经提交更改的数据。假设A在取款事务的过程中，B往该账户转账100元，A两次读取账户的余额不一致。
-|时间|取款事务A|转账事务B|
-|:&mdash;|:&mdash;-|:&mdash;-|
-|T1||开始事务|
-|T2||开始事务||
-|T3||查询账户余额为1000元|
-|T4|查询账户余额1000元||
-|T5||取出100元，把余额改为900元|
-|T6||<strong>查询事务</strong>|
-|T7|查询账户余额为900元||</p>
+<p>不可重复读是指A事务读取B事务已经提交更改的数据。假设A在取款事务的过程中，B往该账户转账100元，A两次读取账户的余额不一致。</p>
+<table>
+<thead>
+<tr>
+<th align="left">时间</th>
+<th align="left">取款事务A</th>
+<th align="left">转账事务B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">T1</td>
+<td align="left"></td>
+<td align="left">开始事务</td>
+</tr>
+<tr>
+<td align="left">T2</td>
+<td align="left"></td>
+<td align="left">开始事务</td>
+</tr>
+<tr>
+<td align="left">T3</td>
+<td align="left"></td>
+<td align="left">查询账户余额为1000元</td>
+</tr>
+<tr>
+<td align="left">T4</td>
+<td align="left">查询账户余额1000元</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">T5</td>
+<td align="left"></td>
+<td align="left">取出100元，把余额改为900元</td>
+</tr>
+<tr>
+<td align="left">T6</td>
+<td align="left"></td>
+<td align="left"><strong>查询事务</strong></td>
+</tr>
+<tr>
+<td align="left">T7</td>
+<td align="left">查询账户余额为900元</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p>在同一事务中，T4和T7时间点读取的账户余额不一致。</p>
 <h4 id="3-幻想读phantom-read">3. 幻想读(phantom read)</h4>
 <p>A事务读取B事务提交的新增数据，这时A事务将出现幻想读现象。幻想读一般发生在计算统计数据的事务中。</p>
-<p>举个例子，比如在银行系统的同一个事务中有两次统计存款用户的总金额，在两次统计中刚好新增了一个存款，这时，两次统计的结构将会不一致。
-|时间|统计金额事务A|转账事务B|
-|:&mdash;|:&mdash;|:&ndash;|
-|T1||开始事务|
-|T2|开始事务||
-|T3|统计总存款为1000元||
-|T4||新增一个存款账户，存款100元|
-|55||提交事务|
-|T6|再次统计总存款数为10100元（幻想读）||</p>
+<p>举个例子，比如在银行系统的同一个事务中有两次统计存款用户的总金额，在两次统计中刚好新增了一个存款，这时，两次统计的结构将会不一致。</p>
+<table>
+<thead>
+<tr>
+<th align="left">时间</th>
+<th align="left">统计金额事务A</th>
+<th align="left">转账事务B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">T1</td>
+<td align="left"></td>
+<td align="left">开始事务</td>
+</tr>
+<tr>
+<td align="left">T2</td>
+<td align="left">开始事务</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">T3</td>
+<td align="left">统计总存款为1000元</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">T4</td>
+<td align="left"></td>
+<td align="left">新增一个存款账户，存款100元</td>
+</tr>
+<tr>
+<td align="left">55</td>
+<td align="left"></td>
+<td align="left">提交事务</td>
+</tr>
+<tr>
+<td align="left">T6</td>
+<td align="left">再次统计总存款数为10100元（幻想读）</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p>如果新增的数据刚好满足事务的查询条件，那么这个新数据就会出现事务的视野中，因而产生了两次结构不一致。</p>
 <p>幻想读和不可重复读这两个概念比较容易混淆
 ，幻想读是指读到了其他已经提交的事务的新增数据，而不可重复读是指读到了已经提交的更改数据（更改或者删除）。</p>
@@ -270,13 +340,53 @@ REPEATABLE READ解决了脏读的问题，该级别保证在同一个事务中�
 <li>SERIALIZABLE（可串行化）
 SERIALIZABLE是最高的隔离级别。它通过事务串执行，避免了前面所说的幻读问题。简单来说SERIALIZABLE会为每一行数据都加锁，所以会导致大量的锁超时和竞争。实际中很少使用这个隔离级别。</li>
 </ol>
-<p>下表为事务隔离级别对并发问题的解决情况：
-|隔离级别|脏读|不可重复读|幻想读|第一类丢失更新|第二类丢失更新|
-|:&mdash;-|:&mdash;-|:&mdash;-|:&mdash;|:&mdash;|:&mdash;-|
-|READ UNCOMMITED|允许|允许|允许|不允许|允许|
-|READ COMMITED|不允许|允许|允许|不允许|允许|
-|REPEATABLE READ|不允许|不允许|允许|不允许|不允许|
-|SERIALIZABLE|不允许|不允许|不允许|不允许|不允许|</p>
+<p>下表为事务隔离级别对并发问题的解决情况：</p>
+<table>
+<thead>
+<tr>
+<th align="left">隔离级别</th>
+<th align="left">脏读</th>
+<th align="left">不可重复读</th>
+<th align="left">幻想读</th>
+<th align="left">第一类丢失更新</th>
+<th align="left">第二类丢失更新</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">READ UNCOMMITED</td>
+<td align="left">允许</td>
+<td align="left">允许</td>
+<td align="left">允许</td>
+<td align="left">不允许</td>
+<td align="left">允许</td>
+</tr>
+<tr>
+<td align="left">READ COMMITED</td>
+<td align="left">不允许</td>
+<td align="left">允许</td>
+<td align="left">允许</td>
+<td align="left">不允许</td>
+<td align="left">允许</td>
+</tr>
+<tr>
+<td align="left">REPEATABLE READ</td>
+<td align="left">不允许</td>
+<td align="left">不允许</td>
+<td align="left">允许</td>
+<td align="left">不允许</td>
+<td align="left">不允许</td>
+</tr>
+<tr>
+<td align="left">SERIALIZABLE</td>
+<td align="left">不允许</td>
+<td align="left">不允许</td>
+<td align="left">不允许</td>
+<td align="left">不允许</td>
+<td align="left">不允许</td>
+</tr>
+</tbody>
+</table>
 <p>其中READ UNCOMMITED并发性和吞吐量最好，SERIALIZABLE的最差，所以事务的隔离级别和数据库的并发行是对立的。</p>
 
         </div>
