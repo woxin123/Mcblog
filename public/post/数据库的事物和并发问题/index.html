@@ -133,16 +133,53 @@
 </li>
 </ol>
 <h4 id="1-脏读direct-read">1. 脏读（direct read）</h4>
-<p>A事务读取B事务尚未提交更改的数据，并在这个数据的基础上进行操作。如果恰巧B事务回滚，那么A事务读取到的数据是不被承认的。通过一个取款事务和转账事务来说明这个问题。
-|时间|转账事务A|取款事务B|
-|:&mdash;-|:&mdash;|:&mdash;-|
-|T1||开始事务|
-|T2|开始事务|查询账户余额1000元|
-|T3||取出500元，把余额改为500元|
-|T4|查询余额500元（脏读）||
-|T5||撤销事务，余额恢复为1000元|
-|T6|汇入100元，把余额改为600元||
-|T8|提交事务||</p>
+<p>A事务读取B事务尚未提交更改的数据，并在这个数据的基础上进行操作。如果恰巧B事务回滚，那么A事务读取到的数据是不被承认的。通过一个取款事务和转账事务来说明这个问题。</p>
+<table>
+<thead>
+<tr>
+<th align="left">时间</th>
+<th align="left">转账事务A</th>
+<th align="left">取款事务B</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">T1</td>
+<td align="left"></td>
+<td align="left">开始事务</td>
+</tr>
+<tr>
+<td align="left">T2</td>
+<td align="left">开始事务</td>
+<td align="left">查询账户余额1000元</td>
+</tr>
+<tr>
+<td align="left">T3</td>
+<td align="left"></td>
+<td align="left">取出500元，把余额改为500元</td>
+</tr>
+<tr>
+<td align="left">T4</td>
+<td align="left">查询余额500元（脏读）</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">T5</td>
+<td align="left"></td>
+<td align="left">撤销事务，余额恢复为1000元</td>
+</tr>
+<tr>
+<td align="left">T6</td>
+<td align="left">汇入100元，把余额改为600元</td>
+<td></td>
+</tr>
+<tr>
+<td align="left">T8</td>
+<td align="left">提交事务</td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <p>在这个场景中转账事务A读取到取款事务B中的未提交的数据，导致脏读。</p>
 <h4 id="2-不可重复读unrepeatable-read">2. 不可重复读(unrepeatable read)</h4>
 <p>不可重复读是指A事务读取B事务已经提交更改的数据。假设A在取款事务的过程中，B往该账户转账100元，A两次读取账户的余额不一致。</p>
