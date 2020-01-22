@@ -1,6 +1,6 @@
 ---
 title: "Java 并发之无锁"
-date: 2018-10-09T17:15+8:00
+date: 2018-10-09T17:15:00+08:00
 draft: false
 toc: true
 categories: ["Java", "并发"]
