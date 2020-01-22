@@ -82,11 +82,34 @@
     <article class="post">
         <header>
             <h1 class="post-title">
+                <a href="https://blog.mengchen.online/post/%E5%85%B3%E4%BA%8EJava%E4%B8%AD%E7%9A%84%E4%BC%A0%E5%8F%82%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92/">关于Java中的传参是值传递还是引用传递</a>
+            </h1>
+        </header>
+        <date class="post-meta meta-date">
+            2019年2月9日
+        </date>
+        
+        <div class="post-meta meta-category">
+            |
+            
+            <a href='https://blog.mengchen.online/categories/Java'>Java</a>
+            
+        </div>
+        
+        <div class="post-content">
+            在Java中其实只有值传递，而没有所谓的引用传递。既然Java中没有引用传递，那么到底什么才是引用传递呢？ 在C++中是有引用传递的，下来我们来看一个简单的小程序，如下： 1 2 3 4 5 6 7 8 9 10 11 12 13 #include &lt;iostream&gt;using namespace std; int changeXtoY(int &amp;x, int y) { x = y; } int main() { int a = 2; changeXtoY(a, 4); cout &lt;&lt; &#34;a=&#34; &lt;&lt; a &lt;&lt; endl; return 0; } 运行的结果是a = 4，……
+            <p class="readmore"><a href="https://blog.mengchen.online/post/%E5%85%B3%E4%BA%8EJava%E4%B8%AD%E7%9A%84%E4%BC%A0%E5%8F%82%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92/">阅读全文</a></p>
+        </div>
+    </article>
+    
+    <article class="post">
+        <header>
+            <h1 class="post-title">
                 <a href="https://blog.mengchen.online/post/Java%E5%B9%B6%E5%8F%91%E4%B9%8B%E6%97%A0%E9%94%81/">Java 并发之无锁</a>
             </h1>
         </header>
         <date class="post-meta meta-date">
-            1年1月1日
+            2018年10月9日
         </date>
         
         <div class="post-meta meta-category">
@@ -141,11 +164,15 @@
     </li>
     
     <li>
-        <a href="https://blog.mengchen.online/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/" title="数据库的事物和并发问题">数据库的事物和并发问题</a>
+        <a href="https://blog.mengchen.online/post/%E5%85%B3%E4%BA%8EJava%E4%B8%AD%E7%9A%84%E4%BC%A0%E5%8F%82%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92/" title="关于Java中的传参是值传递还是引用传递">关于Java中的传参是值传递还是引用传递</a>
     </li>
     
     <li>
         <a href="https://blog.mengchen.online/post/Java%E5%B9%B6%E5%8F%91%E4%B9%8B%E6%97%A0%E9%94%81/" title="Java 并发之无锁">Java 并发之无锁</a>
+    </li>
+    
+    <li>
+        <a href="https://blog.mengchen.online/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/" title="数据库的事物和并发问题">数据库的事物和并发问题</a>
     </li>
     
 </ul>
@@ -157,7 +184,7 @@
         <h3 class="widget-title">分类</h3>
 <ul class="widget-list">
     
-    <li><a href="https://blog.mengchen.online/categories/Java/">Java (1)</a></li>
+    <li><a href="https://blog.mengchen.online/categories/Java/">Java (2)</a></li>
     
     <li><a href="https://blog.mengchen.online/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建 (1)</a></li>
     
