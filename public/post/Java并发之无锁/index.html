@@ -73,6 +73,107 @@
                 <div class="col-8" id="main">
                     
 <div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#无锁解决冲突的办法cas">无锁解决冲突的办法：CAS</a></li>
+    <li><a href="#java中的指针unsafe类">Java中的指针：Unsafe类</a></li>
+    <li><a href="#atomicreference-无锁的引用">AtomicReference 无锁的引用</a></li>
+    <li><a href="#atomicstampedreference">AtomicStampedReference</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
     <article class="post">
         <header>
             <h1 class="post-title">Java 并发之无锁</h1>
@@ -95,8 +196,6 @@
             <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
                     阅读</span></span>
         </div>
-        
-
         
         
         <div class="clear" style="display: none">
@@ -147,25 +246,25 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#998;font-style:italic">// 分配内存
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">allocateMemory</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">long</span> var1<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">allocateMemory</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">long</span> var1<span style="color:#000;font-weight:bold">);</span>
 
 <span style="color:#998;font-style:italic">// 重新分配内存
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">reallocateMemory</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">long</span> var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var3<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">reallocateMemory</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">long</span> var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var3<span style="color:#000;font-weight:bold">);</span>
 
 <span style="color:#998;font-style:italic">// 拷贝内存
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">copyMemory</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">,</span> Object var4<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var5<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var7<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">copyMemory</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">,</span> Object var4<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var5<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var7<span style="color:#000;font-weight:bold">);</span>
 
 <span style="color:#998;font-style:italic">// 释放内存
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">freeMemory</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">long</span> var1<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">freeMemory</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">long</span> var1<span style="color:#000;font-weight:bold">);</span>
 
 <span style="color:#998;font-style:italic">// 获取起始地址
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">getAddress</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">long</span> var1<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">getAddress</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">long</span> var1<span style="color:#000;font-weight:bold">);</span>
 
 
 <span style="color:#998;font-style:italic">// 获取操作系统内存页大小
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">pageSize</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">pageSize</span><span style="color:#000;font-weight:bold">();</span>
 
-<span style="color:#000;font-weight:bold">.</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000;font-weight:bold">.</span><span style="color:#000;font-weight:bold">.</span>
+<span style="color:#000;font-weight:bold">.....</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Unsafe中有两个方法可以将线程挂起和恢复，如下：</p>
@@ -179,10 +278,10 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#998;font-style:italic">// 线程调用方法，将线程挂起
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">unpark</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">unpark</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">);</span>
 
 <span style="color:#998;font-style:italic">// 线程恢复
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">park</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">boolean</span> var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">park</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">boolean</span> var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">);</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>Unsafe中的关于CAS的操作：</p>
@@ -195,11 +294,11 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
 </span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">compareAndSwapObject</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">,</span> Object var4<span style="color:#000;font-weight:bold">,</span> Object var5<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">compareAndSwapObject</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">,</span> Object var4<span style="color:#000;font-weight:bold">,</span> Object var5<span style="color:#000;font-weight:bold">);</span>
 
-<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">compareAndSwapInt</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> var4<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> var5<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">compareAndSwapInt</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> var4<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> var5<span style="color:#000;font-weight:bold">);</span>
 
-<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">compareAndSwapLong</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var4<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var6<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">compareAndSwapLong</span><span style="color:#000;font-weight:bold">(</span>Object var1<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var2<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var4<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">long</span> var6<span style="color:#000;font-weight:bold">);</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>CAS的操作的核心实现是这三个方法。
@@ -216,7 +315,7 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1
 </span></code></pre></td>
 <td style="vertical-align:top;padding:0;margin:0;border:0;;width:100%">
-<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">objectFieldOffset</span><span style="color:#000;font-weight:bold">(</span>Field field<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+<pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">native</span> <span style="color:#458;font-weight:bold">long</span> <span style="color:#900;font-weight:bold">objectFieldOffset</span><span style="color:#000;font-weight:bold">(</span>Field field<span style="color:#000;font-weight:bold">);</span>
 </code></pre></td></tr></table>
 </div>
 </div><p>因为int，long，boolean类型的相关操作不是原子性的，所以JDK在1.5之后提供了atomic包（具体在<code>java.util.concurrent.atomic</code>中）来将这些操作变成原子操作。</p>
@@ -322,7 +421,7 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
 <pre style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">class</span> <span style="color:#458;font-weight:bold">AtomicInteger</span> <span style="color:#000;font-weight:bold">extends</span> Number <span style="color:#000;font-weight:bold">implements</span> java<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">io</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">Serializable</span> <span style="color:#000;font-weight:bold">{</span>
     
     <span style="color:#998;font-style:italic">// 实例化Unsafe
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#000;font-weight:bold">final</span> Unsafe unsafe <span style="color:#000;font-weight:bold">=</span> Unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getUnsafe</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#000;font-weight:bold">final</span> Unsafe unsafe <span style="color:#000;font-weight:bold">=</span> Unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getUnsafe</span><span style="color:#000;font-weight:bold">();</span>
     
     <span style="color:#998;font-style:italic">// valueOffset变量保存的是value中的偏移量，这一点可以在下面的static初始化块中可以看出
 </span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">static</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">long</span> valueOffset<span style="color:#000;font-weight:bold">;</span>
@@ -331,8 +430,8 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
         <span style="color:#000;font-weight:bold">try</span> <span style="color:#000;font-weight:bold">{</span>
             <span style="color:#998;font-style:italic">// 获取value的偏移量
 </span><span style="color:#998;font-style:italic"></span>            valueOffset <span style="color:#000;font-weight:bold">=</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">objectFieldOffset</span>
-                <span style="color:#000;font-weight:bold">(</span>AtomicInteger<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getDeclaredField</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;value&#34;</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
-        <span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">catch</span> <span style="color:#000;font-weight:bold">(</span>Exception ex<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> Error<span style="color:#000;font-weight:bold">(</span>ex<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span> <span style="color:#000;font-weight:bold">}</span>
+                <span style="color:#000;font-weight:bold">(</span>AtomicInteger<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">class</span><span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getDeclaredField</span><span style="color:#000;font-weight:bold">(</span><span style="color:#d14">&#34;value&#34;</span><span style="color:#000;font-weight:bold">));</span>
+        <span style="color:#000;font-weight:bold">}</span> <span style="color:#000;font-weight:bold">catch</span> <span style="color:#000;font-weight:bold">(</span>Exception ex<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span> <span style="color:#000;font-weight:bold">throw</span> <span style="color:#000;font-weight:bold">new</span> Error<span style="color:#000;font-weight:bold">(</span>ex<span style="color:#000;font-weight:bold">);</span> <span style="color:#000;font-weight:bold">}</span>
     <span style="color:#000;font-weight:bold">}</span>
 
     <span style="color:#000;font-weight:bold">private</span> <span style="color:#000;font-weight:bold">volatile</span> <span style="color:#458;font-weight:bold">int</span> value<span style="color:#000;font-weight:bold">;</span>
@@ -347,11 +446,11 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
     <span style="color:#998;font-style:italic">/**
 </span><span style="color:#998;font-style:italic">     * 实例化一个AtomicInteger对象，其初始值为0
 </span><span style="color:#998;font-style:italic">     */</span>
-    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">AtomicInteger</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+    <span style="color:#000;font-weight:bold">public</span> <span style="color:#900;font-weight:bold">AtomicInteger</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
     <span style="color:#000;font-weight:bold">}</span>
     
     <span style="color:#998;font-style:italic">// 获取当前值
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">get</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">get</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
         <span style="color:#000;font-weight:bold">return</span> value<span style="color:#000;font-weight:bold">;</span>
     <span style="color:#000;font-weight:bold">}</span>
     <span style="color:#998;font-style:italic">// 设置当前值
@@ -361,46 +460,46 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
 
     <span style="color:#998;font-style:italic">// 延迟设值
 </span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">lazySet</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> newValue<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-        unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">putOrderedInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> newValue<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+        unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">putOrderedInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> newValue<span style="color:#000;font-weight:bold">);</span>
     <span style="color:#000;font-weight:bold">}</span>
 
     <span style="color:#998;font-style:italic">// 设置新值获取旧值
 </span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">getAndSet</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> newValue<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndSetInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> newValue<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndSetInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> newValue<span style="color:#000;font-weight:bold">);</span>
     <span style="color:#000;font-weight:bold">}</span>
 
     <span style="color:#998;font-style:italic">// CAS操作，把当前值和预期值做比较，相当时设置新值
 </span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">compareAndSet</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> expect<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> update<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">compareAndSwapInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> expect<span style="color:#000;font-weight:bold">,</span> update<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">compareAndSwapInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> expect<span style="color:#000;font-weight:bold">,</span> update<span style="color:#000;font-weight:bold">);</span>
     <span style="color:#000;font-weight:bold">}</span>
 
     
     <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">weakCompareAndSet</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> expect<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> update<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">compareAndSwapInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> expect<span style="color:#000;font-weight:bold">,</span> update<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">compareAndSwapInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> expect<span style="color:#000;font-weight:bold">,</span> update<span style="color:#000;font-weight:bold">);</span>
     <span style="color:#000;font-weight:bold">}</span>
 
     <span style="color:#998;font-style:italic">// 当前值加1，返回旧值
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">getAndIncrement</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndAddInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> 1<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">getAndIncrement</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndAddInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> 1<span style="color:#000;font-weight:bold">);</span>
     <span style="color:#000;font-weight:bold">}</span>
 
     <span style="color:#998;font-style:italic">// 当前值-1，返回旧值
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">getAndDecrement</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndAddInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">-</span>1<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">getAndDecrement</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
+        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndAddInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">-</span>1<span style="color:#000;font-weight:bold">);</span>
     <span style="color:#000;font-weight:bold">}</span>
 
     <span style="color:#998;font-style:italic">// 当前值加上delta，然后返回旧值
 </span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">getAndAdd</span><span style="color:#000;font-weight:bold">(</span><span style="color:#458;font-weight:bold">int</span> delta<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
-        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndAddInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> delta<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+        <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndAddInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> delta<span style="color:#000;font-weight:bold">);</span>
     <span style="color:#000;font-weight:bold">}</span>
 
     <span style="color:#998;font-style:italic">// 当前值加1，然后返回
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">incrementAndGet</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">incrementAndGet</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
         <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndAddInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> 1<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">+</span> 1<span style="color:#000;font-weight:bold">;</span>
     <span style="color:#000;font-weight:bold">}</span>
     
     <span style="color:#998;font-style:italic">// 当前值减1，返回返回
-</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">decrementAndGet</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">{</span>
+</span><span style="color:#998;font-style:italic"></span>    <span style="color:#000;font-weight:bold">public</span> <span style="color:#000;font-weight:bold">final</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">decrementAndGet</span><span style="color:#000;font-weight:bold">()</span> <span style="color:#000;font-weight:bold">{</span>
         <span style="color:#000;font-weight:bold">return</span> unsafe<span style="color:#000;font-weight:bold">.</span><span style="color:#008080">getAndAddInt</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">this</span><span style="color:#000;font-weight:bold">,</span> valueOffset<span style="color:#000;font-weight:bold">,</span> <span style="color:#000;font-weight:bold">-</span>1<span style="color:#000;font-weight:bold">)</span> <span style="color:#000;font-weight:bold">-</span> 1<span style="color:#000;font-weight:bold">;</span>
     <span style="color:#000;font-weight:bold">}</span>
 
@@ -443,11 +542,11 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
 </span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">boolean</span> <span style="color:#900;font-weight:bold">compareAndSet</span><span style="color:#000;font-weight:bold">(</span>V   expectedReference<span style="color:#000;font-weight:bold">,</span>
                                  V   newReference<span style="color:#000;font-weight:bold">,</span>
                                  <span style="color:#458;font-weight:bold">int</span> expectedStamp<span style="color:#000;font-weight:bold">,</span>
-                                 <span style="color:#458;font-weight:bold">int</span> newStamp<span style="color:#000;font-weight:bold">)</span><span style="color:#000;font-weight:bold">;</span>
+                                 <span style="color:#458;font-weight:bold">int</span> newStamp<span style="color:#000;font-weight:bold">);</span>
 <span style="color:#998;font-style:italic">// 获取索引
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> V <span style="color:#900;font-weight:bold">getReference</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> V <span style="color:#900;font-weight:bold">getReference</span><span style="color:#000;font-weight:bold">()</span>
 <span style="color:#998;font-style:italic">// 获取时间戳
-</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">getStamp</span><span style="color:#000;font-weight:bold">(</span><span style="color:#000;font-weight:bold">)</span>
+</span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">int</span> <span style="color:#900;font-weight:bold">getStamp</span><span style="color:#000;font-weight:bold">()</span>
 <span style="color:#998;font-style:italic">// 设置当前对象引用和时间戳
 </span><span style="color:#998;font-style:italic"></span><span style="color:#000;font-weight:bold">public</span> <span style="color:#458;font-weight:bold">void</span> <span style="color:#900;font-weight:bold">set</span><span style="color:#000;font-weight:bold">(</span>V newReference<span style="color:#000;font-weight:bold">,</span> <span style="color:#458;font-weight:bold">int</span> newStamp<span style="color:#000;font-weight:bold">)</span>
 </code></pre></td></tr></table>
@@ -496,22 +595,18 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
     
     
 
-<div id="vcomments"></div>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-<script type="text/javascript">
-  new Valine({
-    el: '#vcomments',
-    appId: 'Wh8pwLoR0pjRL97Q8rlJp9jS-gzGzoHsz',
-    appKey: '4QT1DCo0KbARIjnlkGHV51KG',
-    notify: 'false',
-    verify: 'false',
-    avatar: 'mm',
-    placeholder: '说点什么吧...',
-    visitor: 'true',
-    avatar: 'identicon'
-  });
-</script>
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
 </div>
 
                 </div>
@@ -526,33 +621,16 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
 </form>
     </section>
     
-
-    
-    <section class="widget">
-        <h3 class="widget-title">文章目录</h3>
-<ul class="widget-list">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#无锁解决冲突的办法cas">无锁解决冲突的办法：CAS</a></li>
-    <li><a href="#java中的指针unsafe类">Java中的指针：Unsafe类</a></li>
-    <li><a href="#atomicreference-无锁的引用">AtomicReference 无锁的引用</a></li>
-    <li><a href="#atomicstampedreference">AtomicStampedReference</a></li>
-  </ul>
-</nav>
-</ul>
-    </section>
-    
-
     <section class="widget">
         <h3 class="widget-title">最近文章</h3>
 <ul class="widget-list">
     
     <li>
-        <a href="https://blog.mengchen.online/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="使用hugo&#43;github搭建博客">使用hugo&#43;github搭建博客</a>
+        <a href="https://blog.mengchen.online/post/java%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B/" title="Java中的类型">Java中的类型</a>
     </li>
     
     <li>
-        <a href="https://blog.mengchen.online/post/test/" title="Test">Test</a>
+        <a href="https://blog.mengchen.online/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="使用hugo&#43;github搭建博客">使用hugo&#43;github搭建博客</a>
     </li>
     
     <li>
@@ -576,7 +654,7 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
         <h3 class="widget-title">分类</h3>
 <ul class="widget-list">
     
-    <li><a href="https://blog.mengchen.online/categories/Java/">Java (2)</a></li>
+    <li><a href="https://blog.mengchen.online/categories/Java/">Java (3)</a></li>
     
     <li><a href="https://blog.mengchen.online/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建 (1)</a></li>
     
@@ -587,7 +665,12 @@ CAS是乐观派，总认为自己可以操作成功。当多个线程同时使�
 </ul>
     </section>
 
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
     
+</div>
+    </section>
 
     
 <section class="widget">

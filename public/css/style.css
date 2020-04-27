@@ -372,23 +372,6 @@ textarea {
     border-bottom: 1px solid #eee;
     overflow: hidden;
 }
-
-.post-content h3 {
-    font-size: 1.4em;
-}
-
-.post-content h4 {
-    font-size: 1.3em;
-}
-
-.post-content h5 {
-    font-size: 1.2em;
-}
-
-.post-content h6 {
-    font-size: 1.1em;
-}
-
 .post-content pre{
     padding: 1em;
 }
@@ -638,7 +621,7 @@ textarea.textarea {
     padding:10px 40px 10px 0;
 }
 .post-content h2, .comment-content h2 {
-    font-size: 1.5em;
+    font-size:1.28571em;
 }
 .post-content img, .comment-content img {
     max-width:100%;

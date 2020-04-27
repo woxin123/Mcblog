@@ -73,6 +73,119 @@
                 <div class="col-8" id="main">
                     
 <div class="res-cons">
+    <style type="text/css">
+    .post-toc {
+        position: fixed;
+        width: 200px;
+        margin-left: -210px;
+        padding: 5px 10px;
+        font-family: Athelas, STHeiti, Microsoft Yahei, serif;
+        font-size: 12px;
+        border: 1px solid rgba(0, 0, 0, .07);
+        border-radius: 5px;
+        background-color: rgba(255, 255, 255, 0.98);
+        background-clip: padding-box;
+        -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        box-shadow: 1px 1px 2px rgba(0, 0, 0, .125);
+        word-wrap: break-word;
+        white-space: nowrap;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        z-index: 999;
+        cursor: pointer;
+        max-height: 70%;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .post-toc .post-toc-title {
+        width: 100%;
+        margin: 0 auto;
+        font-size: 20px;
+        font-weight: 400;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    .post-toc .post-toc-content {
+        font-size: 15px;
+    }
+
+    .post-toc .post-toc-content>nav>ul {
+        margin: 10px 0;
+    }
+
+    .post-toc .post-toc-content ul {
+        padding-left: 20px;
+        list-style: square;
+        margin: 0.5em;
+        line-height: 1.8em;
+    }
+
+    .post-toc .post-toc-content ul ul {
+        padding-left: 15px;
+        display: none;
+    }
+
+    @media print,
+    screen and (max-width:1057px) {
+        .post-toc {
+            display: none;
+        }
+    }
+</style>
+<div class="post-toc" style="position: absolute; top: 188px;">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#hugo-安装">hugo 安装</a>
+      <ul>
+        <li><a href="#mac-平台下">Mac 平台下</a></li>
+        <li><a href="#debian-and-ubuntu平台下">Debian and Ubuntu平台下</a></li>
+        <li><a href="#windows-平台下">Windows 平台下</a></li>
+        <li><a href="#验证安装">验证安装</a></li>
+      </ul>
+    </li>
+    <li><a href="#主题的下载和配置等">主题的下载和配置等</a>
+      <ul>
+        <li><a href="#创建一个站点">创建一个站点</a></li>
+        <li><a href="#创建文章">创建文章</a></li>
+        <li><a href="#安装皮肤">安装皮肤</a></li>
+        <li><a href="#配置">配置</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var postToc = $(".post-toc");
+        if (postToc.length) {
+            var leftPos = $("#main").offset().left;
+            if(leftPos<220){
+                postToc.css({"width":leftPos-10,"margin-left":(0-leftPos)})
+            }
+
+            var t = postToc.offset().top - 20,
+                a = {
+                    start: {
+                        position: "absolute",
+                        top: t
+                    },
+                    process: {
+                        position: "fixed",
+                        top: 20
+                    },
+                };
+            $(window).scroll(function () {
+                var e = $(window).scrollTop();
+                e < t ? postToc.css(a.start) : postToc.css(a.process)
+            })
+        }
+    })
+</script>
     <article class="post">
         <header>
             <h1 class="post-title">使用hugo&#43;github搭建博客</h1>
@@ -93,8 +206,6 @@
             <span id="busuanzi_container_page_pv">|<span id="busuanzi_value_page_pv"></span><span>
                     阅读</span></span>
         </div>
-        
-
         
         
         <div class="clear" style="display: none">
@@ -173,6 +284,7 @@ draft<span style="color:#a61717;background-color:#e3d2d2">:</span> <span style="
 <li>date: 时间</li>
 <li>draft: 是否草稿</li>
 </ul>
+<p>如果这里的 <code>draft</code> 为 <code>true</code>，那么最终生成的内容中将不会有这篇文章。</p>
 <h3 id="安装皮肤">安装皮肤</h3>
 <p>可以在 Hugo 官网中找到一款好看的皮肤进行安装。</p>
 <p>下面是一个大佬使用的皮肤。</p>
@@ -226,8 +338,6 @@ draft<span style="color:#a61717;background-color:#e3d2d2">:</span> <span style="
     <h2>See Also</h2>
     <ul class="listing">
         
-        <li><a href="/post/test/">Test</a></li>
-        
         <li><a href="/post/%E5%85%B3%E4%BA%8EJava%E4%B8%AD%E7%9A%84%E4%BC%A0%E5%8F%82%E6%98%AF%E5%80%BC%E4%BC%A0%E9%80%92%E8%BF%98%E6%98%AF%E5%BC%95%E7%94%A8%E4%BC%A0%E9%80%92/">关于Java中的传参是值传递还是引用传递</a></li>
         
         <li><a href="/post/Java%E5%B9%B6%E5%8F%91%E4%B9%8B%E6%97%A0%E9%94%81/">Java 并发之无锁</a></li>
@@ -235,6 +345,8 @@ draft<span style="color:#a61717;background-color:#e3d2d2">:</span> <span style="
         <li><a href="/post/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E4%BA%8B%E7%89%A9%E5%92%8C%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98/">数据库的事物和并发问题</a></li>
         
         <li><a href="/about/">关于我</a></li>
+        
+        <li><a href="/tools/">工具</a></li>
         
     </ul>
 </div>
@@ -249,22 +361,18 @@ draft<span style="color:#a61717;background-color:#e3d2d2">:</span> <span style="
     
     
 
-<div id="vcomments"></div>
-<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
-<script type="text/javascript">
-  new Valine({
-    el: '#vcomments',
-    appId: 'Wh8pwLoR0pjRL97Q8rlJp9jS-gzGzoHsz',
-    appKey: '4QT1DCo0KbARIjnlkGHV51KG',
-    notify: 'false',
-    verify: 'false',
-    avatar: 'mm',
-    placeholder: '说点什么吧...',
-    visitor: 'true',
-    avatar: 'identicon'
-  });
-</script>
+    
+    
+    <div class="post bg-white">
+      <script src="https://utteranc.es/client.js"
+            repo= "your github repo"
+            issue-term="pathname"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+      </script>
+    </div>
+    
 </div>
 
                 </div>
@@ -279,45 +387,16 @@ draft<span style="color:#a61717;background-color:#e3d2d2">:</span> <span style="
 </form>
     </section>
     
-
-    
-    <section class="widget">
-        <h3 class="widget-title">文章目录</h3>
-<ul class="widget-list">
-    <nav id="TableOfContents">
-  <ul>
-    <li><a href="#hugo-安装">hugo 安装</a>
-      <ul>
-        <li><a href="#mac-平台下">Mac 平台下</a></li>
-        <li><a href="#debian-and-ubuntu平台下">Debian and Ubuntu平台下</a></li>
-        <li><a href="#windows-平台下">Windows 平台下</a></li>
-        <li><a href="#验证安装">验证安装</a></li>
-      </ul>
-    </li>
-    <li><a href="#主题的下载和配置等">主题的下载和配置等</a>
-      <ul>
-        <li><a href="#创建一个站点">创建一个站点</a></li>
-        <li><a href="#创建文章">创建文章</a></li>
-        <li><a href="#安装皮肤">安装皮肤</a></li>
-        <li><a href="#配置">配置</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-</ul>
-    </section>
-    
-
     <section class="widget">
         <h3 class="widget-title">最近文章</h3>
 <ul class="widget-list">
     
     <li>
-        <a href="https://blog.mengchen.online/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="使用hugo&#43;github搭建博客">使用hugo&#43;github搭建博客</a>
+        <a href="https://blog.mengchen.online/post/java%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B/" title="Java中的类型">Java中的类型</a>
     </li>
     
     <li>
-        <a href="https://blog.mengchen.online/post/test/" title="Test">Test</a>
+        <a href="https://blog.mengchen.online/post/%E4%BD%BF%E7%94%A8hugo&#43;github%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="使用hugo&#43;github搭建博客">使用hugo&#43;github搭建博客</a>
     </li>
     
     <li>
@@ -341,7 +420,7 @@ draft<span style="color:#a61717;background-color:#e3d2d2">:</span> <span style="
         <h3 class="widget-title">分类</h3>
 <ul class="widget-list">
     
-    <li><a href="https://blog.mengchen.online/categories/Java/">Java (2)</a></li>
+    <li><a href="https://blog.mengchen.online/categories/Java/">Java (3)</a></li>
     
     <li><a href="https://blog.mengchen.online/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/">博客搭建 (1)</a></li>
     
@@ -352,7 +431,12 @@ draft<span style="color:#a61717;background-color:#e3d2d2">:</span> <span style="
 </ul>
     </section>
 
+    <section class="widget">
+        <h3 class="widget-title">标签</h3>
+<div class="tagcloud">
     
+</div>
+    </section>
 
     
 <section class="widget">

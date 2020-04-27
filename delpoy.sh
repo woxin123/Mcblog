@@ -1,5 +1,5 @@
 #/bin/sh
-cd /Users/bytedance/workspace/blog
+cd /d/data/blog/Mcblog
 hugo
 cd public
 git add .
